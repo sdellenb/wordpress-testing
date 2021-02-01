@@ -1,0 +1,37 @@
+# Source: https://docs.docker.com/compose/wordpress/
+version: '3.3'
+
+services:
+  db:
+    image: mariadb:10.4
+    volumes:
+      - db_data:/var/lib/mysql
+      - ../backupwordpress/db_dumps/:/docker-entrypoint-initdb.d/ # Automatically populate the database.
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: LocalDevelopmentOnly
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    # Override the default wordpress directory with the extracted folder.
+    volumes:
+      - type: bind
+        source: ../backupwordpress/extracted
+        target: /var/www/html
+    ports:
+      - "8000:80"
+    restart: always
+    environment:
+      # Override the configured DB settings with hardcoded values.
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+
+volumes:
+    db_data: {}

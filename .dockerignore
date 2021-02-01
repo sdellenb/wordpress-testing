@@ -1,1 +1,5 @@
+# Nothing should be added to the Docker context.
+# We'll use volumes only.
 backupwordpress/
+docker/
+scripts/
