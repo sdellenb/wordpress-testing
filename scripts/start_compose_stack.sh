@@ -12,3 +12,4 @@ docker-compose -f "${DOCKER_DIR}"/docker-compose.yaml up -d
 
 # Hackaround: Change permissions of all WordPress files.
 docker-compose -f "${DOCKER_DIR}"/docker-compose.yaml exec wordpress chgrp -R www-data /var/www/html/
+docker-compose -f "${DOCKER_DIR}"/docker-compose.yaml exec wordpress chmod g+w /var/www/html/.htaccess

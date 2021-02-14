@@ -19,10 +19,14 @@ services:
       - db
     image: wordpress:latest
     # Override the default wordpress directory with the extracted folder.
+    # Add your own folders here (like child-themes and custom plugins).
     volumes:
       - type: bind
         source: ../backupwordpress/extracted
         target: /var/www/html
+      # - type: bind
+      #   source: ../../onepress-child
+      #   target: /var/www/html/wp-content/themes/onepress-child
     ports:
       - "8000:80"
     restart: always
