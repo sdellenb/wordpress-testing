@@ -18,14 +18,18 @@ printf ' Done.\n'
 LATEST_COMPLETE="$(find . -name "*complete*.zip" | sort | tail -1)"
 LATEST_DATABASE="$(find . -name "*database*.zip" | sort | tail -1)"
 
+[[ ! -f "${LATEST_COMPLETE}" ]] && echo "Error: complete backup file is required." && exit 1
+
 printf 'Extracting %s...' "${LATEST_COMPLETE}"
-# Since the daily DB is usually newer, skip it from the complete backup.
 unzip -d extracted -q "${LATEST_COMPLETE}"
 printf ' Done.\n'
 
-printf 'Extracting %s...' "${LATEST_DATABASE}"
-unzip -d extracted -q "${LATEST_DATABASE}"
-printf ' Done.\n'
+# Separate DB-only backup is optional.
+if [[ -f "${LATEST_DATABASE}" ]]; then
+  printf 'Extracting %s...' "${LATEST_DATABASE}"
+  unzip -d extracted -q "${LATEST_DATABASE}"
+  printf ' Done.\n'
+fi
 
 # Separate the latest DB Dump from the Wordpress folder contents and give it a fixed name for the import.
 unset -v latest
