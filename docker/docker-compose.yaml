@@ -32,10 +32,21 @@ services:
     restart: always
     environment:
       # Override the configured DB settings with hardcoded values.
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      # WORDPRESS_DEBUG: 1 # uncomment in case of problems.
+    env_file:
+      # Values extracted from the original wp-config.php.
+      wordpress.env
+
+  # In case you need to look into the database:
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
 
 volumes:
     db_data: {}
