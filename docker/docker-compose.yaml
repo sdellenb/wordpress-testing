@@ -6,7 +6,7 @@ services:
     image: mariadb:10.4
     volumes:
       - db_data:/var/lib/mysql
-      - ../backupwordpress/db_dumps/:/docker-entrypoint-initdb.d/ # Automatically populate the database.
+      - ../backupwordpress/db_dumps/:/docker-entrypoint-initdb.d # Automatically populate the database.
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: LocalDevelopmentOnly
